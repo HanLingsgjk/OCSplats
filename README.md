@@ -6,26 +6,26 @@ Follow the steps below to set up your environment.
 
 
 
-## 1️⃣ Conda Environment
+## 1 Conda Environment
 
 ```bash
 conda create -n ocsplat python=3.10
 conda activate ocsplat
 ```
 
-## 2️⃣ Install PyTorch (CUDA 11.8)
+## 2 Install PyTorch (CUDA 11.8)
 
 ```bash
 pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
 ```
 
-## 3️⃣ Install OCSplat (local project)
+## 3 Install OCSplat (local project)
 Make sure you are inside the project directory:
 ```bash
 python setup.py install
 ```
 
-## 4️⃣ Install Required Dependencies
+## 4 Install Required Dependencies
 ```bash
 pip install jaxtyping ninja
 pip install "numpy<2"
@@ -38,7 +38,7 @@ pip install tensorboard
 pip install scikit-learn
 ```
 
-## 5️⃣ Install Segment Anything (SAM)
+## 5 Install Segment Anything (SAM)
 ```bash
 cd segment-anything
 pip install -e .
@@ -48,7 +48,7 @@ cd ..
 Download the SAM weights and update the file path in SAM_block.py at line 20.
 
 
-## 6️⃣ Install pycolmap
+## 6 Install pycolmap
 ```bash
 cd pycolmap
 python3 -m pip install -e .
@@ -59,7 +59,7 @@ cd ..
 # 🛠️ Full Reconstruction Pipeline
 Below is the complete OCSplat workflow, from COLMAP preprocessing to final robust Gaussian Splatting reconstruction.
 
-## 1️⃣ COLMAP Sparse Reconstruction
+## 1 COLMAP Sparse Reconstruction
 Ensure that COLMAP is installed on your Ubuntu environment.
 Then run:
 ```bash
@@ -74,7 +74,7 @@ After reconstruction, COLMAP will produce:
 sparse/0/
 ```
 
-## 2️⃣ Feature Extraction & Rigid/Clutter Segmentation
+## 2 Feature Extraction & Rigid/Clutter Segmentation
 
 Run the SAM-based preprocessing script:
 ```bash
@@ -90,7 +90,7 @@ images/
 sparse/0/
 ```
 
-## 3️⃣ Robust Gaussian Splatting Reconstruction
+## 3 Robust Gaussian Splatting Reconstruction
 Finally, run the main training script:
 ```bash
 python examples/mytrainer2.py \
