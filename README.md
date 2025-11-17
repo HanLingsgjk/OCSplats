@@ -118,3 +118,14 @@ Parameter	Description
 
 # 🙏 Acknowledgements
 This project builds upon the excellent work of: https://github.com/lilygoli/SpotLessSplats
+
+# 🙏 Citation
+```bash
+@inproceedings{ling2025ocsplats,
+  title={OCSplats: Observation Completeness Quantification and Label Noise Separation in 3DGS},
+  author={Ling, Han and Xu, Xian and Sun, Yinghui and Sun, Quansen},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={25680--25689},
+  year={2025}
+}
+```
