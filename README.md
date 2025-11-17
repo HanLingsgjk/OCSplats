@@ -1,17 +1,4 @@
-# 🌐 OCSplat — Robust 3D Gaussian Splatting with Clutter-Aware Reconstruction
-
-OCSplat provides a complete pipeline for **robust 3D Gaussian Splatting reconstruction** in realistic outdoor and indoor scenes.  
-It includes:
-
-- COLMAP preprocessing  
-- SAM-based rigid/clutter separation  
-- Feature extraction  
-- Robust Gaussian Splatting optimization  
-- Visualization and evaluation tools  
-
-This project integrates **gsplat**, **Segment Anything**, **pycolmap**, and several custom modules to provide stable reconstruction even under clutter, occlusion, or complex structures.
-
-
+# 🌐 OCSplats: Observation Completeness Quantification and Label Noise Separation in 3DGS
 
 # 🚀 Installation Guide
 
@@ -24,10 +11,110 @@ Follow the steps below to set up your environment.
 ```bash
 conda create -n ocsplat python=3.10
 conda activate ocsplat
+```
 
-
-## 1️⃣ Install PyTorch (CUDA 11.8)
+## 2️⃣ Install PyTorch (CUDA 11.8)
 
 ```bash
 pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
+```
 
+## 3️⃣ Install OCSplat (local project)
+Make sure you are inside the project directory:
+```bash
+python setup.py install
+```
+
+## 4️⃣ Install Required Dependencies
+```bash
+pip install jaxtyping ninja
+pip install "numpy<2"
+pip install "opencv-python<=4.8.1.78"
+pip install imageio
+pip install nerfview==0.0.2
+pip install torchmetrics
+pip install mediapy
+pip install tensorboard
+pip install scikit-learn
+```
+
+## 5️⃣ Install Segment Anything (SAM)
+```bash
+cd segment-anything
+pip install -e .
+cd ..
+```
+🔔 Note:
+Download the SAM weights and update the file path in SAM_block.py at line 20.
+
+
+## 6️⃣ Install pycolmap
+```bash
+cd pycolmap
+python3 -m pip install -e .
+cd ..
+```
+
+
+# 🛠️ Full Reconstruction Pipeline
+Below is the complete OCSplat workflow, from COLMAP preprocessing to final robust Gaussian Splatting reconstruction.
+
+## 1️⃣ COLMAP Sparse Reconstruction
+Ensure that COLMAP is installed on your Ubuntu environment.
+Then run:
+```bash
+bash local_colmap_and_resize.sh /path/to/dataset/
+```
+Your dataset folder must contain:
+```bash
+images/       # input RGB images
+```
+After reconstruction, COLMAP will produce:
+```bash
+sparse/0/
+```
+
+## 2️⃣ Feature Extraction & Rigid/Clutter Segmentation
+
+Run the SAM-based preprocessing script:
+```bash
+python SAM_block.py
+```
+Before running, modify the dataset path at line 327 of SAM_block.py:
+```bash
+path = "/home/lh/all_datasets/RobustScene/testsocsplat/spot/"
+```
+The folder must include:
+```bash
+images/
+sparse/0/
+```
+
+## 3️⃣ Robust Gaussian Splatting Reconstruction
+Finally, run the main training script:
+```bash
+python examples/mytrainer2.py \
+    --data_dir /home/lh/all_datasets/RobustScene/testsocsplat/spot/ \
+    --data_factor 8 \
+    --result_dir /home/lh/all_datasets/RobustScene/testsocsplat/spottest/ \
+    --loss_type robust \
+    --semantics \
+    --no-cluster \
+    --train_keyword "clutter" \
+    --test_keyword "extra"
+```
+
+## 🔧 Parameter Description
+Parameter	Description
+
+--data_dir	Dataset folder containing images + COLMAP sparse/0
+
+--result_dir	Output directory of reconstruction results
+
+--data_factor	Downsample factor (default = 8 except patio dataset)
+
+## 📌 On first run: gsplat will compile CUDA kernels, so initial startup may take extra time.
+
+
+# 🙏 Acknowledgements
+This project builds upon the excellent work of: https://github.com/lilygoli/SpotLessSplats
