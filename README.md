@@ -6,7 +6,7 @@ Follow the steps below to set up your environment.
 
 [PAPER](https://openaccess.thecvf.com/content/ICCV2025/html/Ling_OCSplats_Observation_Completeness_Quantification_and_Label_Noise_Separation_in_3DGS_ICCV_2025_paper.html) 
 
-[Data(on-the-go)]([https://drive.google.com/file/d/1DI0EgBDBRhlfR5IyIryUEXGU6EDeeGBo/view?usp=sharing](https://drive.google.com/file/d/1GA25m2l-y6-k3GhLpWVr_q_82_WcM-Gj/view?usp=sharing))
+[Data(on-the-go)](https://drive.google.com/file/d/1GA25m2l-y6-k3GhLpWVr_q_82_WcM-Gj/view?usp=sharing)
 
 ## 1 Conda Environment
 
